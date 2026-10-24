@@ -1,0 +1,7 @@
+{
+  "name": "nattdaoruang-public-catalog",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {"test": "node --test tests/*.test.cjs", "build": "node scripts/build.cjs"},
+  "engines": {"node": ">=22"}
+}

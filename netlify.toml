@@ -1,0 +1,8 @@
+[build]
+  command = "npm test && npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# This project has no runtime functions, edge functions, login, or database SDK.
