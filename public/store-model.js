@@ -1,7 +1,8 @@
 (function(root,factory){const x=factory();if(typeof module==='object'&&module.exports)module.exports=x;else root.StoreModel=x;})(typeof globalThis!=='undefined'?globalThis:this,()=>{
 'use strict';
 const text=(v,n=500)=>String(v??'').trim().slice(0,n);
-function image(v){v=text(v,210000);if(/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(v))return v;try{const u=new URL(v);return u.protocol==='https:'&&!u.username&&!u.password?u.href:'';}catch{return '';}}
+const OWNED_BRAND_IMAGES=Object.freeze({"https://i.ibb.co/pvYhJpvK/1660909698077.jpg": "https://courageous-smakager-7b886a.netlify.app/.netlify/functions/product-image?id=0f732bb8baa2a68a52b5048894c85b31d649ab97589c48b919134f1ee3818bc3.jpg", "https://i.ibb.co/k2WwYzT5/1777820693593.png": "https://courageous-smakager-7b886a.netlify.app/.netlify/functions/product-image?id=79c776f66b8a4e7cd4ba1ed7d6ebf4f7f1525af2dbd60a429b949261fb40d04d.jpg", "https://i.ibb.co/b56JWb1j/kplusshop-qr-20230425145855.jpg": "https://courageous-smakager-7b886a.netlify.app/.netlify/functions/product-image?id=72006e841d304f38873eba653d30a5fe80d360c99e0becc336226d368e990440.jpg", "https://i.ibb.co/60XSNkLx/05816f18412b.webp": "https://courageous-smakager-7b886a.netlify.app/.netlify/functions/product-image?id=9853c21788e8b588cd92979b2bba7fcd8731f26d106ff59e15b8f20053fef205.jpg"});
+function image(v){v=text(v,210000);v=OWNED_BRAND_IMAGES[v]||v;if(/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(v))return v;try{const u=new URL(v);return u.protocol==='https:'&&!u.username&&!u.password?u.href:'';}catch{return '';}}
 function link(v){try{const u=new URL(v);return u.protocol==='https:'&&!u.username&&!u.password?u.href:'';}catch{return '';}}
 function mapLink(v){const safe=link(v);if(!safe)return '';const u=new URL(safe);return ['maps.app.goo.gl','maps.google.com','www.google.com','google.com','goo.gl'].includes(u.hostname)?safe:'';}
 function mapEmbed(v){const safe=link(v);if(!safe)return '';const u=new URL(safe);return ['www.google.com','maps.google.com','google.com'].includes(u.hostname)&&u.pathname.startsWith('/maps/embed')?safe:'';}
@@ -58,3 +59,4 @@ function photoCode(p){const code=String(p?.code??'').trim(),barcode=String(p?.ba
 function navigation(data){return visibleCategories(data.categories||[]);}
 function inCategory(product,rows,id){if(!id)return true;if(!rows.some(c=>c.id===id))return false;const ids=descendants(rows,id);return (product.categoryIds||[]).some(c=>ids.has(c));}
 return {photoCode,defaults,config,catalog,publish,image,link,categories,visibleCategories,descendants,trail,navigation,inCategory,groups,appearance,mapLink,mapEmbed,variantLabel,selectedName,inquiryLink,matchesProduct};});
+
